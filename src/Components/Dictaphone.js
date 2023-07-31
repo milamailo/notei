@@ -1,15 +1,19 @@
-import React from "react";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import React from 'react';
+import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
+const appId = 'fdc5337d-095d-42be-b1b0-11b8833365f1';
+const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
+SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 
 const Dictaphone = () => {
   const {
     transcript,
     listening,
     resetTranscript,
-    browserSupportsSpeechRecognition,
+    browserSupportsSpeechRecognition
   } = useSpeechRecognition();
+  const startListening = () => SpeechRecognition.startListening({ continuous: true });
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -17,9 +21,13 @@ const Dictaphone = () => {
 
   return (
     <div>
-      <p>Microphone: {listening ? "on" : "off"}</p>
-      <button onClick={SpeechRecognition.startListening}>Start</button>
-      <button onClick={SpeechRecognition.stopListening}>Stop</button>
+      <p>Microphone: {listening ? 'on' : 'off'}</p>
+      <button
+        onTouchStart={startListening}
+        onMouseDown={startListening}
+        onTouchEnd={SpeechRecognition.stopListening}
+        onMouseUp={SpeechRecognition.stopListening}
+      >Hold to talk</button>
       <button onClick={resetTranscript}>Reset</button>
       <p>{transcript}</p>
     </div>
