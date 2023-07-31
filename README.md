@@ -2,6 +2,8 @@
 
 Using react-speech-recognition without polyfill
 
+[Speechly](https://docs.speechly.com/basics/getting-started) appId needed to run the app
+
 ### `npm start`
 
 Runs the app in the development mode.\
