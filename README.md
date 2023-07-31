@@ -1,2 +1,1 @@
-# HAIRSTYLE
-AI Hair Styling
+# AI NOTE
