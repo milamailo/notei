@@ -3,6 +3,8 @@
 Using react-speech-recognition without polyfill
 
 [Speechly](https://docs.speechly.com/basics/getting-started) appId needed to run the app
+[NPM](https://www.npmjs.com/package/react-speech-recognition#cross-browser-example)
+[Polyfill Repo](https://github.com/JamesBrill/react-speech-recognition/blob/HEAD/docs/POLYFILLS.md)
 
 ### `npm start`
 
