@@ -21,7 +21,7 @@ app.use(cors());
 
 // endpoint for ChatGPT
 
-app.post("/chat", async (req, res) => {
+app.post("/text-analyze", async (req, res) => {
   const { prompt } = req.body;
 
   const completion = await openai.createCompletion({
