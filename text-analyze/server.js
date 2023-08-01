@@ -1,21 +1,27 @@
 const express = require("express");
+
 const cors = require("cors");
+
 const bodyParser = require("body-parser");
 
-const { Configuration, OpenAi } = require("openai");
+const { Configuration, OpenAIApi } = require("openai");
 
 // apiKey MUST move to the .env file before repo being available to public
 const config = new Configuration({
-  apiKey: "",
+  apiKey: "YOUR_API_KEY",
 });
 
-const openai = new OpenAi(config);
+const openai = new OpenAIApi(config);
+
+// Setup server
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/text-analyze", async (req, res) => {
+// endpoint for ChatGPT
+
+app.post("/chat", async (req, res) => {
   const { prompt } = req.body;
 
   const completion = await openai.createCompletion({
@@ -32,3 +38,5 @@ const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
+
+//run node server.js
