@@ -2,6 +2,7 @@ import React from 'react';
 import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
+// appId MUST move to the .env file before repo being available to public
 const appId = 'fdc5337d-095d-42be-b1b0-11b8833365f1';
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
 SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
