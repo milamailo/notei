@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./TextAnalyze.css";
 
 export default function TextAnalyze() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
   const HTTP = "http://localhost:8080/text-analyze";
 
-const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
