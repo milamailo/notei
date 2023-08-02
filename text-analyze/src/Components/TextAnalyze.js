@@ -37,10 +37,10 @@ export default function TextAnalyze() {
   return (
     <div className="container container-sm p-1">
       {" "}
-      <h1 className="title text-center text-darkGreen">ChatGPT API</h1>
+      <h1 className="title text-center text-darkGreen">Text Analyzer</h1>
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="">Ask questions</label>
+          <label htmlFor="">Past a Paragraph/ text to sumerize</label>
           <input
             className="shadow-sm"
             type="text"
@@ -55,9 +55,7 @@ export default function TextAnalyze() {
       </form>
       <div className="bg-darkGreen  mt-2 p-1 border-5">
         <p className="text-light">
-          <ul>
-            {response ? nextLine(response) : <il>"Ask me anything..."</il>}
-          </ul>
+          <ul>{response ? nextLine(response) : <il>"waiting..."</il>}</ul>
         </p>
       </div>
     </div>
