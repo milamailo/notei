@@ -8,7 +8,7 @@ const { Configuration, OpenAIApi } = require("openai");
 
 // apiKey MUST move to the .env file before repo being available to public
 const config = new Configuration({
-  apiKey: "YOUR_API_KEY",
+  apiKey: "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",
 });
 
 const openai = new OpenAIApi(config);
