@@ -6,7 +6,7 @@
 
 ## [DevPreview](https://miladesmailpour.github.io/ai-note-taker/)
 
-## Description
+## [Description]()
 
 - Motivation: Using side notes in communication enhances memory retention, aids comprehension of complex subjects, and facilitates organized learning by offering supplementary annotations and cues for future reference.
 
