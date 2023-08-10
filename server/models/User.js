@@ -29,12 +29,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  notes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Note",
-    },
-  ],
+  //   notes: [
+  //     {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "Note",
+  //     },
+  //   ],
 });
 
 // Combining pre-hooks into a single "save" middleware
