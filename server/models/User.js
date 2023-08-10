@@ -9,10 +9,10 @@ const userSchema = new Schema({
   },
   lastname: {
     type: String,
-    require: true,
+    require: false,
     trim: true,
   },
-  username: {
+  userName: {
     type: String,
     required: false,
     unique: true,
@@ -22,12 +22,21 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    match: [/.+@.+\..+/, "Must match an email address!"],
+    trim: true,
+    uniqueCaseInsensitive: true,
+    validate: {
+      validator: function (email) {
+        // Email validation using a regular expression
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      },
+      message: "Invalid email format example@info.com",
+    },
   },
   password: {
     type: String,
     required: true,
-    minlength: 5,
+    minlength: 8,
+    trim: true,
   },
   //   notes: [
   //     {
@@ -35,6 +44,11 @@ const userSchema = new Schema({
   //       ref: "Note",
   //     },
   //   ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: (timestamp) => dateFormat(timestamp),
+  },
 });
 
 // Combining pre-hooks into a single "save" middleware
