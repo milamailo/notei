@@ -54,17 +54,18 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre("save", async function (next) {
-  // Pre-save hook to fill the userName field from the email
+  // Pre-save hook to fill the username field from the email
   if (!this.username) {
     this.username = this.email.split("@")[0].toLowerCase();
-    this.email = this.email.toLowerCase();
-    this.firstname = this.firstname.toLowerCase();
-    if (this.lastname) {
-      this.lastname = this.lastname.toLowerCase();
-    } else {
-      this.lastname = "";
-    }
   }
+  this.email = this.email.toLowerCase();
+  this.firstname = this.firstname.toLowerCase();
+  if (this.lastname) {
+    this.lastname = this.lastname.toLowerCase();
+  } else {
+    this.lastname = "";
+  }
+
   // set up pre-save middleware to create password
   if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
