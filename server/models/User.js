@@ -14,7 +14,7 @@ const UserSchema = new Schema({
     require: false,
     trim: true,
   },
-  userName: {
+  username: {
     type: String,
     required: false,
     unique: true,
@@ -55,14 +55,14 @@ const UserSchema = new Schema({
 
 UserSchema.pre("save", async function (next) {
   // Pre-save hook to fill the userName field from the email
-  if (!this.userName) {
-    this.userName = this.email.split("@")[0].toLowerCase();
+  if (!this.username) {
+    this.username = this.email.split("@")[0].toLowerCase();
     this.email = this.email.toLowerCase();
-    this.firstName = this.firstName.toLowerCase();
-    if (this.lastName) {
-      this.lastName = this.lastName.toLowerCase();
+    this.firstname = this.firstname.toLowerCase();
+    if (this.lastname) {
+      this.lastname = this.lastname.toLowerCase();
     } else {
-      this.lastName = "";
+      this.lastname = "";
     }
   }
   // set up pre-save middleware to create password
