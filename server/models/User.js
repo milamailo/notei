@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const uniqueValidator = require("mongoose-unique-validator");
 const dateFormat = require("../utils/dateFormat");
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
   firstname: {
     type: String,
     require: true,

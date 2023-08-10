@@ -11,7 +11,7 @@
       "build": "cd client && npm run build"
     },
     "keywords": [],
-    "author": "",
+    "author": "i3th",
     "license": "ISC",
     "devDependencies": {
       "concurrently": "^5.1.0"
