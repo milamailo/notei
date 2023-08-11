@@ -11,23 +11,6 @@ const resolvers = {
         throw new Error(`Failed to fetch users ->  error.message`);
       }
     },
-    // userByEmailOrUserName: async (parent, { usernameOrEmail }) => {
-    //   try {
-    //     let user;
-    //     if (usernameOrEmail.includes("@")) {
-    //       const email = usernameOrEmail;
-    //       user = User.findOne({ email }); //.populate("notes");
-    //     } else {
-    //       const username = usernameOrEmail;
-    //       user = User.findOne({ username }); //.populate("notes");
-    //     }
-    //     return user;
-    //   } catch (error) {
-    //     throw new Error(
-    //       `Failed to fetch : ${usernameOrEmail} ->  ${error.message}`
-    //     );
-    //   }
-    // },
     userByEmailOrUserName: async (parent, { username, email }) => {
       try {
         const user = await User.findOne({
@@ -61,9 +44,39 @@ const resolvers = {
       { firstname, lastname, username, email, password }
     ) => {
       try {
-        const user = await User.updateOne();
+        // Call the userByEmailOrUserName query to check if the user exists
+        const userInfo = await resolvers.Query.userByEmailOrUserName(null, {
+          username,
+          email,
+        });
+
+        if (!userInfo) {
+          throw new Error("User not found.");
+        }
+
+        // Update user properties
+        if (firstname) {
+          userInfo.firstname = firstname;
+        }
+        if (lastname) {
+          userInfo.lastname = lastname;
+        }
+        if (username) {
+          userInfo.username = username;
+        }
+        if (email) {
+          userInfo.email = email;
+        }
+        if (password) {
+          userInfo.password = password;
+        }
+
+        // Save the updated user
+        const user = await userInfo.save();
+
+        return user;
       } catch (error) {
-        throw new Error(`Failed to update ->  ${error.message}`);
+        throw new Error(`Failed to update -> ${error.message}`);
       }
     },
   },
