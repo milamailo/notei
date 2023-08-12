@@ -8,6 +8,16 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
+    notes: [Note]
+    createdAt: Date
+  }
+  type Note {
+    _id: ID
+    title: String
+    text: String
+    summery: String
+    audioFile: String
+    createdAt: Date
   }
   type Auth {
     token: ID!
