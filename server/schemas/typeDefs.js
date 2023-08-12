@@ -9,7 +9,7 @@ const typeDefs = gql`
     email: String
     password: String
     notes: [Note]
-    createdAt: Date
+    createdAt: String
   }
   type Note {
     _id: ID
@@ -17,7 +17,7 @@ const typeDefs = gql`
     text: String
     summery: String
     audioFile: String
-    createdAt: Date
+    createdAt: String
   }
   type Auth {
     token: ID!
