@@ -1,18 +1,20 @@
 const { User, Note, SubNote } = require("../models");
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require("apollo-server-express");
+const { userQuery, userMutation } = require("./Query/User/");
 
 const resolvers = {
   Query: {
-    users: async () => {
-      try {
-        const users = User.find().populate("notes");
+    // users: async () => {
+    //   try {
+    //     const users = User.find().populate("notes");
 
-        return users;
-      } catch (error) {
-        throw new Error(`Failed to fetch users ->  error.message`);
-      }
-    },
+    //     return users;
+    //   } catch (error) {
+    //     throw new Error(`Failed to fetch users ->  error.message`);
+    //   }
+    // },
+    users: userQuery.allUsers,
     userByEmailOrUserName: async (parent, { username, email }) => {
       try {
         const user = await User.findOne({
