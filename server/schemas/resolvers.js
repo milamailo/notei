@@ -10,48 +10,7 @@ const resolvers = {
   },
   Mutation: {
     addUser: userMutation.addUser,
-    updateUser: async (
-      parent,
-      { firstname, lastname, username, email, password, note }
-    ) => {
-      try {
-        // Call the userByEmailOrUserName query to check if the user exists
-        const userInfo = await resolvers.Query.userByEmailOrUserName(null, {
-          username,
-          email,
-        });
-
-        if (!userInfo) {
-          throw new Error("User not found.");
-        }
-
-        // Update user properties
-        if (firstname) {
-          userInfo.firstname = firstname;
-        }
-        if (lastname) {
-          userInfo.lastname = lastname;
-        }
-        if (username) {
-          userInfo.username = username;
-        }
-        if (email) {
-          userInfo.email = email;
-        }
-        if (password) {
-          userInfo.password = password;
-        }
-        if (note) {
-          userInfo.notes.push(note);
-        }
-
-        // Save the updated user
-        const user = await userInfo.save();
-        return user;
-      } catch (error) {
-        throw new Error(`Failed to update -> ${error.message}`);
-      }
-    },
+    updateUser: userMutation.updateUser,
     login: async (parent, { username, email, password }) => {
       try {
         // Call the userByEmailOrUserName query to check if the user exists
