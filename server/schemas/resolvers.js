@@ -5,29 +5,8 @@ const { userQuery, userMutation } = require("./Query/User/");
 
 const resolvers = {
   Query: {
-    // users: async () => {
-    //   try {
-    //     const users = User.find().populate("notes");
-
-    //     return users;
-    //   } catch (error) {
-    //     throw new Error(`Failed to fetch users ->  error.message`);
-    //   }
-    // },
     users: userQuery.allUsers,
-    userByEmailOrUserName: async (parent, { username, email }) => {
-      try {
-        const user = await User.findOne({
-          $or: [{ username }, { email }],
-        }).populate("notes");
-
-        return user;
-      } catch (error) {
-        throw new Error(
-          `Failed to fetch : ${username && email} ->  ${error.message}`
-        );
-      }
-    },
+    userByEmailOrUserName: userQuery.getUser,
   },
   Mutation: {
     addUser: async (parent, { firstname, lastname, email, password }) => {
