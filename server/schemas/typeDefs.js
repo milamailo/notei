@@ -17,6 +17,12 @@ const typeDefs = gql`
     text: String
     summery: String
     audioFile: String
+    subNotes: [SubNote]
+    createdAt: String
+  }
+  type SubNote {
+    _id: ID
+    title: String
     createdAt: String
   }
   type Auth {
