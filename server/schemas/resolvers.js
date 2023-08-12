@@ -6,7 +6,7 @@ const resolvers = {
   Query: {
     users: async () => {
       try {
-        const users = User.find(); //.populate("notes");
+        const users = User.find().populate("notes");
 
         return users;
       } catch (error) {
@@ -17,7 +17,7 @@ const resolvers = {
       try {
         const user = await User.findOne({
           $or: [{ username }, { email }],
-        });
+        }).populate("notes");
 
         return user;
       } catch (error) {
