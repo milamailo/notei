@@ -18,12 +18,12 @@ const noteSchema = new Schema({
   audioFile: {
     type: String,
   },
-    subNotes: [
-      {
-        typr: Schema.Types.ObjectId,
-        ref: "SubNote",
-      },
-    ],
+  subNotes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "SubNote",
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

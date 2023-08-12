@@ -14,6 +14,6 @@ const subNoteSchema = new Schema({
   },
 });
 
-const SubNote = model("Note", subNoteSchema);
+const SubNote = model("SubNote", subNoteSchema);
 
 module.exports = SubNote;
