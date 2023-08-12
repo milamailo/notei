@@ -57,4 +57,33 @@ const updateUser = async (
   }
 };
 
-module.exports = { addUser, updateUser };
+const login = async (_, { username, email, password }) => {
+  try {
+    const user = await getUser(null, {
+      username,
+      email,
+    });
+
+    if (!user) {
+      throw new AuthenticationError(
+        `User NOT found with username/email: ${username && email} ->  ${
+          error.message
+        }`
+      );
+    }
+
+    const chkPassword = await user.isCorrectPassword(password);
+    if (!chkPassword) {
+      throw new AuthenticationError(`Incorrect Credential!`);
+    }
+
+    const token = signToken(user);
+    return { token, user };
+  } catch (error) {
+    throw new Error(
+      `Failed to login : ${username && email} -> ${error.message}`
+    );
+  }
+};
+
+module.exports = { addUser, updateUser, login };

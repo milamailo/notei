@@ -1,6 +1,3 @@
-const { User, Note, SubNote } = require("../models");
-const { signToken } = require("../utils/auth");
-const { AuthenticationError } = require("apollo-server-express");
 const { userQuery, userMutation } = require("./api/User");
 
 const resolvers = {
@@ -11,35 +8,7 @@ const resolvers = {
   Mutation: {
     addUser: userMutation.addUser,
     updateUser: userMutation.updateUser,
-    login: async (parent, { username, email, password }) => {
-      try {
-        // Call the userByEmailOrUserName query to check if the user exists
-        const user = await resolvers.Query.userByEmailOrUserName(null, {
-          username,
-          email,
-        });
-        if (!user) {
-          throw new AuthenticationError(
-            `User NOT found with username/email: ${username && email} ->  ${
-              error.message
-            }`
-          );
-        }
-        // Vrifying thr password
-        chkPassword = await user.isCorrectPassword(password);
-        if (!chkPassword) {
-          throw new AuthenticationError(`Incorrect Credential!`);
-        }
-
-        const token = signToken(user);
-
-        return { token, user };
-      } catch (error) {
-        throw new Error(
-          `Failed to login : ${username && email} ->  ${error.message}`
-        );
-      }
-    },
+    login: userMutation.login,
   },
 };
 
