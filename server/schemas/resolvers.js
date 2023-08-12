@@ -1,5 +1,6 @@
 const { User } = require("../models");
 const { signToken } = require("../utils/auth");
+const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
   Query: {
@@ -49,7 +50,6 @@ const resolvers = {
           username,
           email,
         });
-
         if (!userInfo) {
           throw new Error("User not found.");
         }
@@ -73,10 +73,28 @@ const resolvers = {
 
         // Save the updated user
         const user = await userInfo.save();
-
         return user;
       } catch (error) {
         throw new Error(`Failed to update -> ${error.message}`);
+      }
+    },
+    login: async (parent, { username, email, password }) => {
+      try {
+        // Call the userByEmailOrUserName query to check if the user exists
+        const user = await resolvers.Query.userByEmailOrUserName(null, {
+          username,
+          email,
+        });
+        if(!user){
+          throw new AuthenticationError(
+            `User NOT found with username/email: ${username && email} ->  ${error.message}`
+          );
+        }
+
+      } catch (error) {
+        throw new Error(
+          `Failed to login : ${username && email} ->  ${error.message}`
+        );
       }
     },
   },
