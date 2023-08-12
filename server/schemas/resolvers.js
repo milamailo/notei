@@ -45,7 +45,7 @@ const resolvers = {
     },
     updateUser: async (
       parent,
-      { firstname, lastname, username, email, password }
+      { firstname, lastname, username, email, password, note }
     ) => {
       try {
         // Call the userByEmailOrUserName query to check if the user exists
@@ -73,6 +73,9 @@ const resolvers = {
         }
         if (password) {
           userInfo.password = password;
+        }
+        if (note) {
+          userInfo.notes.push(note);
         }
 
         // Save the updated user
