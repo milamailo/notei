@@ -1,12 +1,13 @@
 const { User } = require("../models");
 const { signToken } = require("../utils/auth");
-const { AuthenticationError } = require('apollo-server-express');
+const { AuthenticationError } = require("apollo-server-express");
 
 const resolvers = {
   Query: {
     users: async () => {
       try {
         const users = User.find(); //.populate("notes");
+
         return users;
       } catch (error) {
         throw new Error(`Failed to fetch users ->  error.message`);
@@ -17,6 +18,7 @@ const resolvers = {
         const user = await User.findOne({
           $or: [{ username }, { email }],
         });
+
         return user;
       } catch (error) {
         throw new Error(
@@ -35,6 +37,7 @@ const resolvers = {
           password,
         });
         const token = signToken(user);
+
         return { token, user };
       } catch (error) {
         throw new Error(`Failed to create ->  ${error.message}`);
@@ -50,6 +53,7 @@ const resolvers = {
           username,
           email,
         });
+
         if (!userInfo) {
           throw new Error("User not found.");
         }
@@ -85,12 +89,22 @@ const resolvers = {
           username,
           email,
         });
-        if(!user){
+        if (!user) {
           throw new AuthenticationError(
-            `User NOT found with username/email: ${username && email} ->  ${error.message}`
+            `User NOT found with username/email: ${username && email} ->  ${
+              error.message
+            }`
           );
         }
+        // Vrifying thr password
+        chkPassword = await user.isCorrectPassword(password);
+        if (!chkPassword) {
+          throw new AuthenticationError(`Incorrect Credential!`);
+        }
 
+        const token = signToken(user);
+
+        return { token, user };
       } catch (error) {
         throw new Error(
           `Failed to login : ${username && email} ->  ${error.message}`
