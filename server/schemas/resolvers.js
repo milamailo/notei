@@ -1,7 +1,7 @@
 const { User, Note, SubNote } = require("../models");
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require("apollo-server-express");
-const { userQuery, userMutation } = require("./Query/User/");
+const { userQuery, userMutation } = require("./api/User");
 
 const resolvers = {
   Query: {
@@ -9,21 +9,7 @@ const resolvers = {
     userByEmailOrUserName: userQuery.getUser,
   },
   Mutation: {
-    addUser: async (parent, { firstname, lastname, email, password }) => {
-      try {
-        const user = await User.create({
-          firstname,
-          lastname,
-          email,
-          password,
-        });
-        const token = signToken(user);
-
-        return { token, user };
-      } catch (error) {
-        throw new Error(`Failed to create ->  ${error.message}`);
-      }
-    },
+    addUser: userMutation.addUser,
     updateUser: async (
       parent,
       { firstname, lastname, username, email, password, note }
