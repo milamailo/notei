@@ -40,12 +40,12 @@ const UserSchema = new Schema({
     minlength: 8,
     trim: true,
   },
-  //   notes: [
-  //     {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "Note",
-  //     },
-  //   ],
+  notes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Note",
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
