@@ -30,10 +30,12 @@ const typeDefs = gql`
     user: User
   }
   type Query {
+    # User
     users: [User]
     userByEmailOrUserName(username: String, email: String): User
   }
   type Mutation {
+    # User
     addUser(
       firstname: String!
       lastname: String
@@ -50,6 +52,14 @@ const typeDefs = gql`
       note: String
     ): User
     login(email: String, username: String, password: String): Auth
+
+    # Note
+    addNote(
+      title: String
+      text: String
+      summery: String
+      audioFile: String
+    ): Note
   }
 `;
 
