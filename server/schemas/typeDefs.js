@@ -59,6 +59,7 @@ const typeDefs = gql`
       text: String
       summery: String
       audioFile: String
+      token: String
     ): Note
   }
 `;

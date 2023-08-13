@@ -19,7 +19,7 @@ const addNote = async (_, { title, text, summery, audioFile }, context) => {
     }
     throw new AuthenticationError("You need to be logged in!");
   } catch (error) {
-    throw new Error(`Failed to create note ->  error.message`);
+    throw new Error(`Failed to create note ->  ${error.message}`);
   }
 };
 
