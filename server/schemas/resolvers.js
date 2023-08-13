@@ -6,6 +6,8 @@ const resolvers = {
     // User
     users: userQuery.allUsers,
     userByEmailOrUserName: userQuery.getUser,
+    // Note
+    notes: noteQuery.allNotes
   },
   Mutation: {
     // User
