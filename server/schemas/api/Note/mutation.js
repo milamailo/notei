@@ -1,4 +1,4 @@
-const { Note } = require("../../../models");
+const { Note, User } = require("../../../models");
 const { AuthenticationError } = require("apollo-server-express");
 
 const addNote = async (_, { title, text, summery, audioFile }, context) => {
@@ -11,7 +11,7 @@ const addNote = async (_, { title, text, summery, audioFile }, context) => {
         audioFile,
       });
 
-      await Note.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { _id: context.user._id },
         { $addToSet: { notes: note._id } }
       );
