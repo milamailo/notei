@@ -31,12 +31,13 @@ const authUser = async (_, args, context) => {
       const user = await User.findOne({ _id: context.user._id }).populate(
         "notes"
       );
+      console.log(user);
 
       return user;
     }
     throw new AuthenticationError("You need to be logged in!");
   } catch (error) {
-    throw new Error(`Failed to fetch : ${error.message}`);
+    throw new Error(`Failed to fetch: ${error.message}`);
   }
 };
 
