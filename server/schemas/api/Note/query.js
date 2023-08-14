@@ -17,5 +17,14 @@ const allNotes = async (_, { username, email }) => {
     throw new Error(`Failed to fatch notes -> ${error.message}`);
   }
 };
+const getNote = async (_, { noteId }) => {
+  try {
+    const note = await Note.findOne({ _id: noteId });
 
-module.exports = { allNotes };
+    return note;
+  } catch (error) {
+    throw new Error(`Failed to fatch note -> ${error.message}`);
+  }
+};
+
+module.exports = { allNotes, getNote };

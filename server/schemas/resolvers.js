@@ -7,7 +7,8 @@ const resolvers = {
     users: userQuery.allUsers,
     userByEmailOrUserName: userQuery.getUser,
     // Note
-    notes: noteQuery.allNotes
+    notes: noteQuery.allNotes,
+    note: noteQuery.getNote,
   },
   Mutation: {
     // User
@@ -15,7 +16,7 @@ const resolvers = {
     updateUser: userMutation.updateUser,
     login: userMutation.login,
     // Note
-    addNote: noteMutation.addNote
+    addNote: noteMutation.addNote,
   },
 };
 
