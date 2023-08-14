@@ -24,4 +24,19 @@ const getUser = async (parent, { username, email }) => {
   }
 };
 
+const authUser = (_, args, context) => {
+  try {
+    if (context.user) {
+      const user = User.findOne({ _id: context.user.id });
+
+      return user;
+    }
+    throw new AuthenticationError("You need to be logged in!");
+  } catch (error) {
+    throw new Error(
+      `Failed to fetch : ${username && email} ->  ${error.message}`
+    );
+  }
+};
+
 module.exports = { allUsers, getUser };
