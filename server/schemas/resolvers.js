@@ -6,6 +6,7 @@ const resolvers = {
     // User
     users: userQuery.allUsers,
     userByEmailOrUserName: userQuery.getUser,
+    authUser: userQuery.authUser,
     // Note
     notes: noteQuery.allNotes,
     note: noteQuery.getNote,

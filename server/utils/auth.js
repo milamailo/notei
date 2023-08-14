@@ -5,27 +5,19 @@ const expiration = "1h";
 
 module.exports = {
   authMiddleware: function ({ req }) {
-    let token =
-      req.body.token ||
-      req.query.token ||
-      req.headers.authorization ||
-      req.body.variables.token;
-    if (req.headers.authorization) {
-      token = token.split(" ").pop().trim();
-    }
+    const token = req.headers.authorization || "";
 
     if (!token) {
-      return req;
+      return {};
     }
 
     try {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
-      req.user = data;
+      return { user: data }; // Set the user data in the context
     } catch (error) {
       console.log("Invalid token", error.message);
+      return {}; // Return an empty context if token is invalid
     }
-
-    return req;
   },
   signToken: function ({ email, username, _id }) {
     const payload = { email, username, _id };

@@ -1,4 +1,5 @@
 const { User } = require("../../../models");
+const { AuthenticationError } = require("apollo-server-express");
 
 const allUsers = async () => {
   try {
@@ -24,19 +25,19 @@ const getUser = async (parent, { username, email }) => {
   }
 };
 
-const authUser = (_, args, context) => {
+const authUser = async (_, args, context) => {
   try {
     if (context.user) {
-      const user = User.findOne({ _id: context.user.id });
+      const user = await User.findOne({ _id: context.user._id }).populate(
+        "notes"
+      );
 
       return user;
     }
     throw new AuthenticationError("You need to be logged in!");
   } catch (error) {
-    throw new Error(
-      `Failed to fetch : ${username && email} ->  ${error.message}`
-    );
+    throw new Error(`Failed to fetch : ${error.message}`);
   }
 };
 
-module.exports = { allUsers, getUser };
+module.exports = { allUsers, getUser, authUser };
