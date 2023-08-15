@@ -15,9 +15,7 @@ const Header = () => {
           <Link className="text-light" to="/">
             <h1 className="m-0">AI note takcer</h1>
           </Link>
-          <p className="m-0">
-            Note all your conversation and though powered by AI.
-          </p>
+          <p className="m-1">Note all your and though powered by AI.</p>
         </div>
         <div>
           {Auth.loggedIn() ? (
