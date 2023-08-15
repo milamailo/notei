@@ -18,9 +18,14 @@ const Home = () => {
               {Auth.loggedIn() ? (
                 users.map((user) => (
                   <li key={user._id}>
-                    <p>
-                      User: {user.firstname} {user.email}
-                    </p>
+                    <p>User: {user.username}</p>
+                    <ul>
+                      {user.notes.map((note) => (
+                        <li key={note._id}>
+                          <p>User: {note.title}</p>
+                        </li>
+                      ))}
+                    </ul>
                   </li>
                 ))
               ) : (
