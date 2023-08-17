@@ -29,3 +29,29 @@ export const MUTATION_LOGIN_USER = gql`
     }
   }
 `;
+
+export const MUTATION_ADD_USER = gql`
+  mutation Mutation(
+    $firstname: String!
+    $lastname: String
+    $email: String!
+    $password: String!
+    $username: String
+  ) {
+    addUser(
+      firstname: $firstname
+      lastname: $lastname
+      email: $email
+      password: $password
+      username: $username
+    ) {
+      token
+      user {
+        _id
+        username
+        email
+        createdAt
+      }
+    }
+  }
+`;

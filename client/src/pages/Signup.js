@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useMutation } from "@apollo/client";
-import { Query_ADD_USER } from "../utils/mutations";
+import { MUTATION_ADD_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
@@ -14,7 +14,7 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const [addUser, { error, data }] = useMutation(Query_ADD_USER);
+  const [addUser, { error, data }] = useMutation(MUTATION_ADD_USER);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
