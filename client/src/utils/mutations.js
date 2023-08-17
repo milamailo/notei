@@ -31,7 +31,7 @@ export const MUTATION_LOGIN_USER = gql`
 `;
 
 export const MUTATION_ADD_USER = gql`
-  mutation Mutation(
+  mutation addUser(
     $firstname: String!
     $lastname: String
     $email: String!

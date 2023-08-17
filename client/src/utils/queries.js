@@ -26,3 +26,55 @@ export const QUERY_ALL_USERS = gql`
     }
   }
 `;
+export const QUERY_USER = gql`
+  query UserByEmailOrUserName($username: String, $email: String) {
+    userByEmailOrUserName(username: $username, email: $email) {
+      _id
+      firstname
+      lastname
+      username
+      email
+      password
+      notes {
+        _id
+        title
+        text
+        summery
+        audioFile
+        createdAt
+        subNotes {
+          _id
+          title
+          createdAt
+        }
+      }
+      createdAt
+    }
+  }
+`;
+export const QUERY_ME = gql`
+  query AuthUser {
+    authUser {
+      _id
+      firstname
+      lastname
+      username
+      email
+      password
+      notes {
+        _id
+        title
+        text
+        summery
+        audioFile
+        subNotes {
+          _id
+          title
+          createdAt
+        }
+        createdAt
+      }
+      createdAt
+    }
+  }
+`;
