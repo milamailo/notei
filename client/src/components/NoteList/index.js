@@ -35,7 +35,7 @@ const NoteList = ({ notes, title, showTitle = true, showUsername = true }) => {
               className="btn btn-primary btn-block btn-squared"
               to={`/notes/${note._id}`}
             >
-              Join the discussion on this thought.
+              add Subnote to this note.
             </Link>
           </div>
         ))}
