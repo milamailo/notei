@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_ALL_USERS } from "../utils/queries";
 import Auth from "../utils/auth";
-import Intro from "../components/";
+import Intro from "../components/Intro";
 
 const Home = () => {
   const { loading, data } = useQuery(QUERY_ALL_USERS);
