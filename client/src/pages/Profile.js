@@ -1,10 +1,9 @@
 import React from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
-
 import Auth from "../utils/auth";
+import NoteList from "../components/NoteList";
 
 const Profile = () => {
   const { username: userParam } = useParams();
@@ -39,7 +38,12 @@ const Profile = () => {
         </h2>
 
         <div className="col-12 col-md-10 mb-5">
-          <h5>Note List</h5>
+          <NoteList
+            notes={user.notes}
+            title={`${user.username}'s notes...`}
+            showTitle={false}
+            showUsername={false}
+          />
         </div>
         {!userParam && (
           <div
