@@ -17,13 +17,13 @@ const NoteList = ({ notes, title, showTitle = true, showUsername = true }) => {
                 <Link className="text-light" to={`/profiles/${note}`}>
                   {note.title} <br />
                   <span style={{ fontSize: "1rem" }}>
-                    had this thought on {note.createdAt}
+                    had this note on {note.createdAt}
                   </span>
                 </Link>
               ) : (
                 <>
                   <span style={{ fontSize: "1rem" }}>
-                    You had this thought on {note.createdAt}
+                    You had this note on {note.createdAt}
                   </span>
                 </>
               )}
