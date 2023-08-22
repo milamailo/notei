@@ -3,6 +3,7 @@ import { createSpeechlySpeechRecognition } from "@speechly/speech-recognition-po
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import "./index.css";
 
 // appId MUST move to the .env file before repo being available to public
 const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
@@ -25,7 +26,7 @@ const Dictaphone = () => {
 
   return (
     <div>
-      <div className="d-flex flex-row bg-light">
+      <div className="d-flex flex-row bg-test">
         <div>
           <h5 className="card-header bg-primary text-light p-2 m-1">
             Microphone: {listening ? "on" : "off"}
@@ -43,13 +44,13 @@ const Dictaphone = () => {
           </button>
         </div>
       </div>
-      <div className="d-flex flex-row bg-primary justify-content-center">
-        <div className="p-2">
-          <p className="text-light">{transcript}</p>
+      <div className="d-flex flex-col bg-primary justify-content-center">
+        <div className="p-2 w-100">
+          <p className="text-light hight-test">{transcript}</p>
         </div>
         <div className="p-2">
           <button
-            className="bg-primary text-light p-2 m-0 offset-md-3"
+            className="bg-primary text-light p-2"
             onTouchStart={startListening}
             onMouseDown={startListening}
             onTouchEnd={SpeechRecognition.stopListening}
