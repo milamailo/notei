@@ -1,6 +1,7 @@
-.bg-test{
-    background-color: brown;
+.bg-test {
+  background-color: lightsalmon;
 }
-.hight-test{
-    height: 300px;
+.hight-test {
+  height: 100px;
+  overflow-y: scroll;
 }

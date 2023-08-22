@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { createSpeechlySpeechRecognition } from "@speechly/speech-recognition-polyfill";
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -19,6 +19,14 @@ const Dictaphone = () => {
   } = useSpeechRecognition();
   const startListening = () =>
     SpeechRecognition.startListening({ continuous: true });
+
+  const transcriptRef = useRef(null);
+
+  useEffect(() => {
+    if (transcriptRef.current) {
+      transcriptRef.current.scrollTop = transcriptRef.current.scrollHeight;
+    }
+  }, [transcript]);
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -45,8 +53,8 @@ const Dictaphone = () => {
         </div>
       </div>
       <div className="d-flex flex-col bg-primary justify-content-center">
-        <div className="p-2 w-100">
-          <p className="text-light hight-test">{transcript}</p>
+        <div className="p-2 hight-test" ref={transcriptRef}>
+          <p className="text-light">{transcript}</p>
         </div>
         <div className="p-2">
           <button
