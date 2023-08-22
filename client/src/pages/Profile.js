@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import NoteList from "../components/NoteList";
+import Dictaphone from "../components/Dictaphone";
 
 const Profile = () => {
   const { username: userParam } = useParams();
@@ -50,7 +51,7 @@ const Profile = () => {
             className="col-12 col-md-10 mb-3 p-3"
             style={{ border: "1px dotted #1a1a1a" }}
           >
-            <h5>Note Form</h5>
+            <Dictaphone />
           </div>
         )}
       </div>
