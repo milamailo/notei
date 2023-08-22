@@ -52,13 +52,13 @@ const Dictaphone = () => {
           </button>
         </div>
       </div>
-      <div className="d-flex flex-col bg-primary justify-content-center">
-        <div className="p-2 hight-test" ref={transcriptRef}>
+      <div className="d-flex flex-col bg-primary">
+        <div className="p-2 hight-text-area" ref={transcriptRef}>
           <p className="text-light">{transcript}</p>
         </div>
         <div className="p-2">
           <button
-            className="bg-primary text-light p-2"
+            className="bg-primary text-light p-2 p-test"
             onTouchStart={startListening}
             onMouseDown={startListening}
             onTouchEnd={SpeechRecognition.stopListening}
