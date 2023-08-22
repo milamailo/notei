@@ -1,5 +1,5 @@
 {
-    "name": "ai-note-tacker",
+    "name": "ai-note-tacker-app",
     "version": "1.0.0",
     "description": "",
     "main": "server/server.js",
