@@ -1,7 +1,11 @@
 .bg-test {
   background-color: lightsalmon;
 }
-.hight-test {
+.hight-text-area {
   height: 100px;
   overflow-y: scroll;
+}
+.p-test {
+  position: relative;
+  left: 50%;
 }
