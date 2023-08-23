@@ -1,4 +1,4 @@
-// const { addNote } = require("../Note/query");
+const { Note } = require("../../../models");
 const { Configuration, OpenAIApi } = require("openai");
 // apiKey MUST move to the .env file before repo being available to public
 const config = new Configuration({
@@ -8,7 +8,7 @@ const openai = new OpenAIApi(config);
 
 const textAnalize = async (_, { transcript }) => {
   // const ts = `tell me a joke`; //summerize the text: ${transcript}
-  const prompt = `${transcript}. (determine a title and summarize the text in {title: "title" , summery: "summery"})`;
+  const prompt = `${transcript}. (determine a title and summarize the text then return in JSON format)`;
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
@@ -16,10 +16,22 @@ const textAnalize = async (_, { transcript }) => {
       temperature: 0.7,
       prompt: prompt,
     });
-    const res = completion.data.choices[0].text;
+    const res = completion.data.choices[0].text
+      .split("\n")
+      .filter((cell) => cell !== "" && cell.length >= 1);
 
-    console.log(res);
-    return res;
+    const title = res[0]
+      .split(" ")
+      .filter((cell, index) => index != 0)
+      .join(" ");
+    const summery = res[1]
+      .split(" ")
+      .filter((cell, index) => index != 0)
+      .join(" ");
+    const text = transcript;
+    const note = await Note.create({ title, summery, text });
+    console.log(note);
+    return note;
   } catch (error) {
     throw new Error(`No response from ai server -> ${error.message}`);
   }
