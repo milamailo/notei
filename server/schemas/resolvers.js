@@ -1,5 +1,6 @@
 const { userQuery, userMutation } = require("./api/User");
 const { noteQuery, noteMutation } = require("./api/Note");
+const { transcriptQuery } = require("./api/Transcript");
 
 const resolvers = {
   Query: {
@@ -10,6 +11,8 @@ const resolvers = {
     // Note
     notes: noteQuery.allNotes,
     note: noteQuery.getNote,
+    // Transcript
+    analyzer: transcriptQuery.textAnalize,
   },
   Mutation: {
     // User
