@@ -5,6 +5,7 @@ import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import NoteList from "../components/NoteList";
 import Dictaphone from "../components/Dictaphone";
+import "./css/Profile.css"
 
 const Profile = () => {
   const { username: userParam } = useParams();

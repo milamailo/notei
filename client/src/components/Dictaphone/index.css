@@ -2,10 +2,17 @@
   background-color: lightsalmon;
 }
 .hight-text-area {
-  height: 100px;
+  height: 80px;
   overflow-y: scroll;
 }
-.p-test {
+.btn-noteit {
   position: relative;
-  left: 50%;
+  left: 45%;
+}
+.hight-text-area::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.hight-text-area::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }

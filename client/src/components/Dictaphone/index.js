@@ -58,7 +58,7 @@ const Dictaphone = () => {
         </div>
         <div className="p-2">
           <button
-            className="bg-primary text-light p-2 p-test"
+            className="bg-primary text-light p-2 btn-noteit"
             onTouchStart={startListening}
             onMouseDown={startListening}
             onTouchEnd={SpeechRecognition.stopListening}
