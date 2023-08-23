@@ -33,7 +33,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
   }
 
   return (
-    <div>
+    <div className="root-dictphone">
       <div className="d-flex flex-row bg-test">
         <div>
           <h5 className="card-header bg-primary text-light p-2 m-1">

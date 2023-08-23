@@ -1,3 +1,11 @@
+.root-dictphone {
+  position: absolute;
+  top: 40%;
+  left: 20%;
+  right: 20%;
+  margin-left: auto;
+  margin-right: auto;
+}
 .bg-test {
   background-color: lightsalmon;
 }
