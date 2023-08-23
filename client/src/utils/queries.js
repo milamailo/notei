@@ -78,3 +78,14 @@ export const QUERY_ME = gql`
     }
   }
 `;
+export const QUERY_ANALYZE = gql`
+  query Analyzer($transcript: String!) {
+    analyzer(transcript: $transcript) {
+      _id
+      title
+      text
+      summery
+      createdAt
+    }
+  }
+`;

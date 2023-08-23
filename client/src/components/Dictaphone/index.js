@@ -1,12 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createSpeechlySpeechRecognition } from "@speechly/speech-recognition-polyfill";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import "./index.css";
 import Backdrop from "../Backdrop/";
+import { QUERY_ANALYZE } from "../../utils/queries";
+import { useLazyQuery } from "@apollo/client";
 
-// appId MUST move to the .env file before repo being available to public
 const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
 SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
@@ -22,6 +23,11 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
     SpeechRecognition.startListening({ continuous: true });
 
   const transcriptRef = useRef(null);
+
+  const [getSummary, { called, loading, data }] = useLazyQuery(QUERY_ANALYZE, {
+    variables: { transcript: transcript },
+  });
+
   useEffect(() => {
     if (transcriptRef.current) {
       transcriptRef.current.scrollTop = transcriptRef.current.scrollHeight;
@@ -31,7 +37,29 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
+  if (called && loading) {
+    return <p>Loading ...</p>;
+  }
+  //A start
+  // if (!called) {
+  //   return <button onClick={() => getSummary()}>Load summary</button>;
+  // }
+  // A end
 
+  const summarizeTranscriptHandler = async (event) => {
+    event.preventDefault();
+    console.log(`summarizeTranscriptHandler ->`);
+    try {
+      getSummary();
+    } catch (error) {
+      throw new Error(`summarizeTranscriptHandler -> ${error}`);
+    }
+  };
+
+  const resetTranscriptHandler = async (event) => {
+    event.preventDefault();
+    resetTranscript();
+  };
   return (
     <>
       <Backdrop onClick={btnBack} />
@@ -43,14 +71,26 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
             </h5>
           </div>
           <div className="ml-auto ">
-            <button className="bg-primary text-light p-2 m-1">Summerize</button>
+            {/* B start */}
+            {called ? (
+              // Show this button if the query has been called
+              <button className="bg-primary text-light p-2 m-1">Summary</button>
+            ) : (
+              // Show this button if the query has not been called
+              <button
+                className="bg-primary text-light p-2 m-1"
+                onClick={summarizeTranscriptHandler}
+              >
+                Summarize
+              </button>
+            )}
             <button className="bg-primary text-light p-2 m-1">
               Transcript
             </button>
             <button className="bg-primary text-light p-2 m-1">Keep it!</button>
             <button
               className="bg-primary text-light p-2 m-1"
-              onClick={resetTranscript}
+              onClick={resetTranscriptHandler}
             >
               Reset
             </button>
@@ -73,6 +113,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
             >
               Note it!
             </button>
+            {data && data.analyzer.text}
           </div>
         </div>
       </div>
