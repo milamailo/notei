@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
@@ -12,7 +12,10 @@ const Profile = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-
+  const [showAddNote, setShowAddNote] = useState(false);
+  const btnBack = () => {
+    setShowAddNote(false);
+  };
   const user = data?.authUser || data?.userByEmailOrUserName || {};
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
@@ -37,7 +40,14 @@ const Profile = () => {
       <div className="profile-root mb-3">
         <div className="col-12 col-md-10 bg-primary text-light p-3 mb-5 note-list-header">
           <h3>Viewing {userParam ? `${user.username}'s` : "your"} profile.</h3>
-          <button className="btn btn-lg btn-info m-2">+note</button>
+          <button
+            onClick={() => {
+              setShowAddNote(true);
+            }}
+            className="btn btn-lg btn-info m-2"
+          >
+            +note
+          </button>
         </div>
         <div className="col-12 col-md-10 mb-5">
           <NoteList
@@ -57,6 +67,13 @@ const Profile = () => {
           </div>
         )}
       </div>
+      {showAddNote && (
+        <Dictaphone
+          user={user}
+          btnBack={btnBack}
+          setShowAddNote={setShowAddNote}
+        />
+      )}
     </div>
   );
 };
