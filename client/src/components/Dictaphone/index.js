@@ -1,17 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createSpeechlySpeechRecognition } from "@speechly/speech-recognition-polyfill";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import "./index.css";
 import Backdrop from "../Backdrop/";
+import { QUERY_ANALYZE } from "../../utils/queries";
+import { useQuery } from "@apollo/client";
 
-// appId MUST move to the .env file before repo being available to public
 const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
 SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 
 const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
+  const [loadingQuery, setLoadingQuery] = useState(false);
   const {
     transcript,
     listening,
@@ -22,6 +24,25 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
     SpeechRecognition.startListening({ continuous: true });
 
   const transcriptRef = useRef(null);
+
+  const { loading, data } = useQuery(QUERY_ANALYZE, {
+    variables: {
+      transcript: transcript,
+    },
+  });
+  const handleSummerizeClick = async () => {
+    setLoadingQuery(true); // Start loading the query
+
+    try {
+      await data.refetch(); // Refetch the query to get the latest data
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+
+    setLoadingQuery(false); // Query loading is done
+  };
+
   useEffect(() => {
     if (transcriptRef.current) {
       transcriptRef.current.scrollTop = transcriptRef.current.scrollHeight;
@@ -43,7 +64,13 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
             </h5>
           </div>
           <div className="ml-auto ">
-            <button className="bg-primary text-light p-2 m-1">Summerize</button>
+            <button
+              className="bg-primary text-light p-2 m-1"
+              onClick={handleSummerizeClick} // Call the function when the button is clicked
+              disabled={loadingQuery} // Disable the button while query is loading
+            >
+              Summerize
+            </button>
             <button className="bg-primary text-light p-2 m-1">
               Transcript
             </button>
