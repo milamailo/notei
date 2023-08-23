@@ -1,3 +1,4 @@
+// const { addNote } = require("../Note/query");
 const { Configuration, OpenAIApi } = require("openai");
 // apiKey MUST move to the .env file before repo being available to public
 const config = new Configuration({
@@ -6,17 +7,21 @@ const config = new Configuration({
 const openai = new OpenAIApi(config);
 
 const textAnalize = async (_, { transcript }) => {
-  const prompt = { transcript };
+  // const ts = `tell me a joke`; //summerize the text: ${transcript}
+  const prompt = `${transcript}. (determine a title and summarize the text in {title: "title" , summery: "summery"})`;
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      max_tokens: 512,
-      temperature: 0,
+      max_tokens: 50,
+      temperature: 0.7,
       prompt: prompt,
     });
-    return completion;
+    const res = completion.data.choices[0].text;
+
+    console.log(res);
+    return res;
   } catch (error) {
-    throw new Error(`Failed to fatch notes -> ${error.message}`);
+    throw new Error(`No response from ai server -> ${error.message}`);
   }
 };
 

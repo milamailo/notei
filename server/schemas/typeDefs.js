@@ -37,6 +37,8 @@ const typeDefs = gql`
     # Note
     notes(username: String, email: String): [Note]
     note(noteId: ID!): Note
+    # Transcript
+    analyzer(transcript: String): String
   }
   type Mutation {
     # User
