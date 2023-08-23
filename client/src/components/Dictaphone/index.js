@@ -41,9 +41,9 @@ const Dictaphone = () => {
           </h5>
         </div>
         <div className="ml-auto ">
-          <button className="bg-primary text-light p-2 m-1">keep it!</button>
-          <button className="bg-primary text-light p-2 m-1">keep it!</button>
-          <button className="bg-primary text-light p-2 m-1">keep it!</button>
+          <button className="bg-primary text-light p-2 m-1">Summerize</button>
+          <button className="bg-primary text-light p-2 m-1">Transcript</button>
+          <button className="bg-primary text-light p-2 m-1">Keep it!</button>
           <button
             className="bg-primary text-light p-2 m-1"
             onClick={resetTranscript}
@@ -58,7 +58,7 @@ const Dictaphone = () => {
         </div>
         <div className="p-2">
           <button
-            className="bg-primary text-light p-2 p-test"
+            className="bg-primary text-light p-2 btn-noteit"
             onTouchStart={startListening}
             onMouseDown={startListening}
             onTouchEnd={SpeechRecognition.stopListening}
