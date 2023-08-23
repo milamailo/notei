@@ -12,7 +12,7 @@ const resolvers = {
     notes: noteQuery.allNotes,
     note: noteQuery.getNote,
     // Transcript
-    analyzer: transcriptQuery.Analize
+    analyzer: transcriptQuery.textAnalize,
   },
   Mutation: {
     // User
