@@ -6,7 +6,9 @@ import SpeechRecognition, {
 import "./index.css";
 import Backdrop from "../Backdrop/";
 import { QUERY_ANALYZE } from "../../utils/queries";
-import { useLazyQuery } from "@apollo/client";
+import { MUTATION_ADD_NOTE } from "../../utils/mutations";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import  Auth  from "../../utils/auth";
 
 const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
@@ -26,6 +28,13 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
   const [note, setNote] = useState({});
 
   const transcriptRef = useRef(null);
+  const [addNote, { error }] = useMutation(MUTATION_ADD_NOTE, {
+    context: {
+      headers: {
+        authorization: Auth.getToken() ? `Bearer ${Auth.getToken()}` : "",
+      },
+    },
+  });
 
   const [getSummary, { called, loading, data }] = useLazyQuery(QUERY_ANALYZE, {
     variables: { transcript: transcript },
@@ -68,10 +77,24 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
   };
   const saveTranscriptHandler = async (event) => {
     event.preventDefault();
-    if (data) {
-      setNote(data.analyzer);
+    // setNote(await data.analyzer);
+    // console.log(typeof data.analyzer, data.analyzer, note);
+    try {
+      const {
+        data: {
+          addNote: { _id },
+        },
+      } = await addNote({
+        variables: {
+          title: "data.analyzer.title",
+          text: "data.analyzer.text",
+          summery: "data.analyzer.summery",
+        },
+      });
+      console.log("saveTranscriptHandler-> " + data);
+    } catch (err) {
+      console.error(err);
     }
-    console.log(note);
   };
 
   return (
