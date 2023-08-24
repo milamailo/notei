@@ -5,10 +5,10 @@ const News = () => {
   const [newsData, setNewsData] = useState([]);
 
   useEffect(() => {
-    const url =
-      "https://newsapi.org/v2/top-headlines?" +
-      "country=us&" +
-      "apiKey=a93d9d3ab51c4dcca78a2a97e0703167";
+    const apiKeyLocalTest = "a93d9d3ab51c4dcca78a2a97e0703167";
+    const apiKey = process.env.NEWS_API_KEY && apiKeyLocalTest;
+    const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+    //   "apiKey=a93d9d3ab51c4dcca78a2a97e0703167";
 
     fetch(url)
       .then((response) => {
