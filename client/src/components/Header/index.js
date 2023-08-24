@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Auth from "../../utils/auth";
 
 const Header = () => {
   const [isProfilePage, setIsProfilePage] = useState(false);
 
+  const location = useLocation();
+
   useEffect(() => {
     // Update the isProfilePage state based on the URL path
-    setIsProfilePage(window.location.href.includes("/me"));
-  }, []);
+    setIsProfilePage(location.pathname.includes("/me"));
+  }, [location]);
 
   const logout = (event) => {
     event.preventDefault();
@@ -21,7 +23,7 @@ const Header = () => {
       <div className="container flex-row justify-space-between-lg justify-center align-center">
         <div>
           <Link className="text-light" to="/">
-            <h1 className="m-0">AI note tracker</h1>
+            <h1 className="m-0">NoteI</h1>
           </Link>
           <p className="m-1">Note all your thoughts, powered by AI.</p>
         </div>
