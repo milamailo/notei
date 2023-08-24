@@ -62,14 +62,20 @@ const Home = () => {
                     Setting
                   </h4>
                   <div className="card-body bg-light p-2 aling-card ">
-                    <button className="btn btn-lg btn-info m-2 w-100">
+                    <Link
+                      className="btn btn-lg btn-info m-2 w-100"
+                      to="/edit-profile"
+                    >
                       Edit Profile
-                    </button>
+                    </Link>
                   </div>
                   <div className="card-body bg-light p-2 aling-card ">
-                    <button className="btn btn-lg btn-info m-2 w-100">
+                    <Link
+                      className="btn btn-lg btn-info m-2 w-100"
+                      to="/edit-password"
+                    >
                       Change Password
-                    </button>
+                    </Link>
                   </div>
                 </div>
                 <div className="card mb-3">
