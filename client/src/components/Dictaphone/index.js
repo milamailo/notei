@@ -6,13 +6,15 @@ import SpeechRecognition, {
 import "./index.css";
 import Backdrop from "../Backdrop/";
 import { QUERY_ANALYZE } from "../../utils/queries";
-import { useLazyQuery } from "@apollo/client";
+import { MUTATION_ADD_NOTE } from "../../utils/mutations";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import Auth from "../../utils/auth";
 
 const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
 SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 
-const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
+const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
   const {
     transcript,
     listening,
@@ -26,6 +28,13 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
   const [note, setNote] = useState({});
 
   const transcriptRef = useRef(null);
+  const [addNote, { error }] = useMutation(MUTATION_ADD_NOTE, {
+    context: {
+      headers: {
+        authorization: Auth.getToken() ? `Bearer ${Auth.getToken()}` : "",
+      },
+    },
+  });
 
   const [getSummary, { called, loading, data }] = useLazyQuery(QUERY_ANALYZE, {
     variables: { transcript: transcript },
@@ -66,6 +75,20 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
     event.preventDefault();
     setDictphoneContainar(true);
   };
+  const saveTranscriptHandler = async (event) => {
+    event.preventDefault();
+    try {
+      await handleAddNote({
+        title: data.analyzer.title,
+        text: data.analyzer.text,
+        summery: data.analyzer.summery,
+      });
+
+      console.log("Note added successfully");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
@@ -97,7 +120,12 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
             >
               Transcript
             </button>
-            <button className="bg-primary text-light p-2 m-1">Keep it!</button>
+            <button
+              className="bg-primary text-light p-2 m-1"
+              onClick={saveTranscriptHandler}
+            >
+              Keep it!
+            </button>
             <button
               className="bg-primary text-light p-2 m-1"
               onClick={resetTranscriptHandler}

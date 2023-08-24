@@ -55,3 +55,27 @@ export const MUTATION_ADD_USER = gql`
     }
   }
 `;
+
+export const MUTATION_ADD_NOTE = gql`
+  mutation Mutation(
+    $title: String
+    $text: String
+    $summery: String
+    $audioFile: String
+    $token: String
+  ) {
+    addNote(
+      title: $title
+      text: $text
+      summery: $summery
+      audioFile: $audioFile
+      token: $token
+    ) {
+      _id
+      title
+      text
+      summery
+      createdAt
+    }
+  }
+`;

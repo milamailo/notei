@@ -1,23 +1,30 @@
 import React, { useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import NoteList from "../components/NoteList";
 import Dictaphone from "../components/Dictaphone";
 import "./css/Profile.css";
+import { MUTATION_ADD_NOTE } from "../utils/mutations";
 
 const Profile = () => {
   const { username: userParam } = useParams();
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
+
+  // Assuming you have a mutation to add a note
+  const [addNote] = useMutation(MUTATION_ADD_NOTE);
+
   const [showAddNote, setShowAddNote] = useState(false);
+
   const btnBack = () => {
     setShowAddNote(false);
   };
+
   const user = data?.authUser || data?.userByEmailOrUserName || {};
-  // navigate to personal profile page if username is yours
+
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
   }
@@ -34,6 +41,22 @@ const Profile = () => {
       </h4>
     );
   }
+
+  const handleAddNote = async (noteData) => {
+    try {
+      // Call the mutation function to add a note
+      await addNote({
+        variables: noteData,
+      });
+
+      // After adding a note, the Apollo Client cache will be automatically updated
+      // and the note list will be refreshed
+
+      setShowAddNote(false);
+    } catch (error) {
+      console.error("Failed to add note:", error);
+    }
+  };
 
   return (
     <div>
@@ -72,6 +95,7 @@ const Profile = () => {
           user={user}
           btnBack={btnBack}
           setShowAddNote={setShowAddNote}
+          handleAddNote={handleAddNote}
         />
       )}
     </div>
