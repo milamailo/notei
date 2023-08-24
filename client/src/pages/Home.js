@@ -18,7 +18,7 @@ const Home = () => {
             <h1>loading ...</h1>
           ) : (
             <ul>
-              {users.map((user) => (
+              {/* {users.map((user) => (
                 <li key={user._id}>
                   <p>User: {user.username}</p>
                   <ul>
@@ -29,7 +29,7 @@ const Home = () => {
                     ))}
                   </ul>
                 </li>
-              ))}
+              ))} */}
             </ul>
           )}
         </div>
