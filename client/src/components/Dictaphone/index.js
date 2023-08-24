@@ -14,7 +14,7 @@ const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
 SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 
-const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
+const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
   const {
     transcript,
     listening,
@@ -76,26 +76,18 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
     setDictphoneContainar(true);
   };
   const saveTranscriptHandler = async (event) => {
-    // event.preventDefault();
-    // setNote(await data.analyzer);
-    // console.log(typeof data.analyzer, data.analyzer, note);
+    event.preventDefault();
     try {
-      const {
-        data: {
-          addNote: { _id },
-        },
-      } = await addNote({
-        variables: {
-          title: data.analyzer.title,
-          text: data.analyzer.text,
-          summery: data.analyzer.summery,
-        },
+      await handleAddNote({
+        title: data.analyzer.title,
+        text: data.analyzer.text,
+        summery: data.analyzer.summery,
       });
-      console.log("saveTranscriptHandler-> " + data);
+
+      console.log("Note added successfully");
     } catch (err) {
       console.error(err);
     }
-    btnBack();
   };
 
   return (
