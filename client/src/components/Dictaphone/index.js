@@ -8,7 +8,7 @@ import Backdrop from "../Backdrop/";
 import { QUERY_ANALYZE } from "../../utils/queries";
 import { MUTATION_ADD_NOTE } from "../../utils/mutations";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import  Auth  from "../../utils/auth";
+import Auth from "../../utils/auth";
 
 const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
@@ -86,9 +86,9 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
         },
       } = await addNote({
         variables: {
-          title: "data.analyzer.title",
-          text: "data.analyzer.text",
-          summery: "data.analyzer.summery",
+          title: data.analyzer.title,
+          text: data.analyzer.text,
+          summery: data.analyzer.summery,
         },
       });
       console.log("saveTranscriptHandler-> " + data);
