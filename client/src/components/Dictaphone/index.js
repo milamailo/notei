@@ -66,6 +66,13 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
     event.preventDefault();
     setDictphoneContainar(true);
   };
+  const saveTranscriptHandler = async (event) => {
+    event.preventDefault();
+    if (data) {
+      setNote(data.analyzer);
+    }
+    console.log(note);
+  };
 
   return (
     <>
@@ -97,7 +104,12 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
             >
               Transcript
             </button>
-            <button className="bg-primary text-light p-2 m-1">Keep it!</button>
+            <button
+              className="bg-primary text-light p-2 m-1"
+              onClick={saveTranscriptHandler}
+            >
+              Keep it!
+            </button>
             <button
               className="bg-primary text-light p-2 m-1"
               onClick={resetTranscriptHandler}
