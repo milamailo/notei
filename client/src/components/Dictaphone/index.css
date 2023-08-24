@@ -5,13 +5,14 @@
   right: 25%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5px;
   z-index: 11;
 }
 .bg-test {
   background-color: lightsalmon;
 }
 .hight-text-area {
-  height: 80px;
+  height: 150px;
   overflow-y: scroll;
 }
 .btn-noteit {

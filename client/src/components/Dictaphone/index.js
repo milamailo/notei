@@ -22,6 +22,9 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
   const startListening = () =>
     SpeechRecognition.startListening({ continuous: true });
 
+  const [dictphoneContainar, setDictphoneContainar] = useState(true);
+  const [note, setNote] = useState({});
+
   const transcriptRef = useRef(null);
 
   const [getSummary, { called, loading, data }] = useLazyQuery(QUERY_ANALYZE, {
@@ -40,17 +43,15 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
   if (called && loading) {
     return <p>Loading ...</p>;
   }
-  //A start
-  // if (!called) {
-  //   return <button onClick={() => getSummary()}>Load summary</button>;
-  // }
-  // A end
 
   const summarizeTranscriptHandler = async (event) => {
     event.preventDefault();
-    console.log(`summarizeTranscriptHandler ->`);
     try {
       getSummary();
+      const t = await data;
+      console.log(t);
+      setDictphoneContainar(false);
+      return t;
     } catch (error) {
       throw new Error(`summarizeTranscriptHandler -> ${error}`);
     }
@@ -60,6 +61,12 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
     event.preventDefault();
     resetTranscript();
   };
+
+  const transcriptHandler = async (event) => {
+    event.preventDefault();
+    setDictphoneContainar(true);
+  };
+
   return (
     <>
       <Backdrop onClick={btnBack} />
@@ -84,7 +91,10 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
                 Summarize
               </button>
             )}
-            <button className="bg-primary text-light p-2 m-1">
+            <button
+              className="bg-primary text-light p-2 m-1"
+              onClick={transcriptHandler}
+            >
               Transcript
             </button>
             <button className="bg-primary text-light p-2 m-1">Keep it!</button>
@@ -99,23 +109,34 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
             </button>
           </div>
         </div>
-        <div className="d-flex flex-col bg-primary">
-          <div className="p-2 hight-text-area" ref={transcriptRef}>
-            <p className="text-light">{transcript}</p>
+        {dictphoneContainar ? (
+          <div>
+            <div className="d-flex flex-col bg-primary">
+              <div className="p-2 hight-text-area" ref={transcriptRef}>
+                <p className="text-light">{transcript}</p>
+              </div>
+              <div className="p-2">
+                <button
+                  className="bg-primary text-light p-2 btn-noteit"
+                  onTouchStart={startListening}
+                  onMouseDown={startListening}
+                  onTouchEnd={SpeechRecognition.stopListening}
+                  onMouseUp={SpeechRecognition.stopListening}
+                >
+                  Note it!
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="p-2">
-            <button
-              className="bg-primary text-light p-2 btn-noteit"
-              onTouchStart={startListening}
-              onMouseDown={startListening}
-              onTouchEnd={SpeechRecognition.stopListening}
-              onMouseUp={SpeechRecognition.stopListening}
-            >
-              Note it!
-            </button>
-            {data && data.analyzer.text}
+        ) : (
+          <div>
+            <div className="d-flex flex-col bg-primary">
+              <div className="p-2 hight-text-area">
+                <p className="text-light">{data && data.analyzer.summery}</p>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );
