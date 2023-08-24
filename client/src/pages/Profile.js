@@ -62,7 +62,7 @@ const Profile = () => {
     <div>
       <div className="profile-root mb-3">
         <div className="col-12 col-md-10 bg-primary text-light p-3 mb-5 note-list-header">
-          <h3>Viewing {userParam ? `${user.username}'s` : "your"} profile.</h3>
+          <h3>Viewing All Notes.</h3>
           <button
             onClick={() => {
               setShowAddNote(true);
