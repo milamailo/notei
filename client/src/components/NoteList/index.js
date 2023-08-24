@@ -2,19 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const NoteList = ({ notes, title, showTitle = true, showUsername = true }) => {
-  // Sort notes by createdAt in descending order
-  const sortedNotes = notes
-    .slice()
-    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  // Sort notes by the absolute difference between createdAt and current time
+  const sortedNotes = notes.slice().sort((a, b) => {
+    const timeDiffA = Math.abs(new Date().getTime() - new Date(a.createdAt).getTime());
+    const timeDiffB = Math.abs(new Date().getTime() - new Date(b.createdAt).getTime());
 
-  if (!sortedNotes.length) {
+    return timeDiffA - timeDiffB;
+  });
+
+  // Reverse the order to display the closest time on top
+  const reversedNotes = sortedNotes.reverse();
+
+  if (!reversedNotes.length) {
     return <h3>No Note Yet</h3>;
   }
 
   return (
     <div>
       {showTitle && <h3>{title}</h3>}
-      {sortedNotes.map((note) => (
+      {reversedNotes.map((note) => (
         <div key={note._id} className="card mb-3">
           <h4 className="card-header bg-primary text-light p-2 m-0">
             {showUsername ? (
