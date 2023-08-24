@@ -10,7 +10,7 @@
   width: 270px;
 }
 .container-child-middle {
-  width: 450px;
+  width: 500px;
 }
 .aling-card {
   display: flex;
@@ -24,4 +24,60 @@
   flex-direction: row;
   justify-content: space-evenly;
   padding: 0;
+}
+@media screen and (max-width: 1280px) {
+  .container-child {
+    width: 260px;
+  }
+  .container-child-middle {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 1140px) {
+  .container-child {
+    width: 230px;
+  }
+  .container-child-middle {
+    width: 340px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container-child {
+    width: 250px;
+  }
+  .container-child-middle {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .container-child {
+    width: 220px;
+  }
+  .container-child-middle {
+    width: 380px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container-child {
+    width: 500px;
+  }
+  .container-child-middle {
+    width: 500px;
+    order: -1;
+  }
+}
+
+/* Small smartphones - image placeholders change color */
+@media screen and (max-width: 576px) {
+  .container-child {
+    width: 400px;
+  }
+  .container-child-middle {
+    width: 400px;
+    order: -1;
+  }
 }
