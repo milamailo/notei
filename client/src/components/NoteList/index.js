@@ -4,8 +4,12 @@ import { Link } from "react-router-dom";
 const NoteList = ({ notes, title, showTitle = true, showUsername = true }) => {
   // Sort notes by the absolute difference between createdAt and current time
   const sortedNotes = notes.slice().sort((a, b) => {
-    const timeDiffA = Math.abs(new Date().getTime() - new Date(a.createdAt).getTime());
-    const timeDiffB = Math.abs(new Date().getTime() - new Date(b.createdAt).getTime());
+    const timeDiffA = Math.abs(
+      new Date().getTime() - new Date(a.createdAt).getTime()
+    );
+    const timeDiffB = Math.abs(
+      new Date().getTime() - new Date(b.createdAt).getTime()
+    );
 
     return timeDiffA - timeDiffB;
   });
@@ -27,13 +31,13 @@ const NoteList = ({ notes, title, showTitle = true, showUsername = true }) => {
               <Link className="text-light" to={`/profiles/${note}`}>
                 {note.title} <br />
                 <span style={{ fontSize: "1rem" }}>
-                  had this note on {note.createdAt}
+                  {note.title} {note.createdAt}
                 </span>
               </Link>
             ) : (
               <>
                 <span style={{ fontSize: "1rem" }}>
-                  You had this note on {note.createdAt}
+                  {note.title} {note.createdAt}
                 </span>
               </>
             )}

@@ -76,7 +76,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
     setDictphoneContainar(true);
   };
   const saveTranscriptHandler = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     // setNote(await data.analyzer);
     // console.log(typeof data.analyzer, data.analyzer, note);
     try {
@@ -95,6 +95,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote }) => {
     } catch (err) {
       console.error(err);
     }
+    btnBack();
   };
 
   return (
