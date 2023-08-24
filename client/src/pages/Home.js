@@ -6,6 +6,7 @@ import "./css/Home.css";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import { Navigate, useParams, Link } from "react-router-dom";
+import News from "../components/News";
 
 const Home = () => {
   const { username: userParam } = useParams();
@@ -151,16 +152,7 @@ const Home = () => {
                   <h4 className="card-header bg-primary text-light p-2 m-0">
                     News
                   </h4>
-                  <div className="card-body bg-light p-2 aling-card ">
-                    <button className="btn btn-lg btn-info m-2 w-100">
-                      News1
-                    </button>
-                  </div>
-                  <div className="card-body bg-light p-2 aling-card ">
-                    <button className="btn btn-lg btn-info m-2 w-100">
-                      News2
-                    </button>
-                  </div>
+                  <News />
                 </div>
               </div>
             </div>
