@@ -94,7 +94,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
     <>
       <Backdrop onClick={btnBack} />
       <div className="root-dictphone">
-        <div className="d-flex flex-row bg-test">
+        <div className="d-flex flex-row bg-light">
           <div>
             <h5 className="card-header bg-primary text-light p-2 m-1">
               Microphone: {listening ? "on" : "off"}
@@ -145,7 +145,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
               </div>
               <div className="p-2">
                 <button
-                  className="bg-primary text-light p-2 btn-noteit"
+                  className="bg-primary text-dark bg-light p-2 btn-noteit"
                   onTouchStart={startListening}
                   onMouseDown={startListening}
                   onTouchEnd={SpeechRecognition.stopListening}
