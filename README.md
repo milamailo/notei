@@ -28,7 +28,7 @@
 
 - What problem does it solve?
 
-- What makes your project stand out?
+- What makes your project stand out ?
 
 - What you will learn?
 
