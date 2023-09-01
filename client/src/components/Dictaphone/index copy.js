@@ -9,7 +9,6 @@ import { QUERY_ANALYZE } from "../../utils/queries";
 import { MUTATION_ADD_NOTE } from "../../utils/mutations";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import Auth from "../../utils/auth";
-import { QUERY_ME } from "../../utils/queries";
 
 const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
@@ -29,30 +28,13 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
   // const [note, setNote] = useState({});
 
   const transcriptRef = useRef(null);
-  const [addNote, { error }] = useMutation(MUTATION_ADD_NOTE, {
-    context: {
-      headers: {
-        authorization: Auth.getToken() ? `Bearer ${Auth.getToken()}` : "",
-      },
-    },
-    update(cache, { data: { addNote } }) {
-      try {
-        const { authUser } = cache.readQuery({ query: QUERY_ME });
-
-        cache.writeQuery({
-          query: QUERY_ME,
-          data: {
-            authUser: {
-              ...authUser,
-              notes: [addNote, ...authUser.notes],
-            },
-          },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    },
-  });
+  // const [addNote, { error }] = useMutation(MUTATION_ADD_NOTE, {
+  //   context: {
+  //     headers: {
+  //       authorization: Auth.getToken() ? `Bearer ${Auth.getToken()}` : "",
+  //     },
+  //   },
+  // });
 
   const [getSummary, { called, loading, data }] = useLazyQuery(QUERY_ANALYZE, {
     variables: { transcript: transcript },
@@ -96,18 +78,13 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
   const saveTranscriptHandler = async (event) => {
     event.preventDefault();
     try {
-      if (data && data.analyzer) {
-        await handleAddNote({
-          title: data.analyzer.title,
-          text: data.analyzer.text,
-          summery: data.analyzer.summery,
-        });
-  
-        console.log("Note added successfully");
-        client.reFetchObservableQueries();
-      } else {
-        console.error("No data or analyzer information available.");
-      }
+      await handleAddNote({
+        title: data.analyzer.title,
+        text: data.analyzer.text,
+        summery: data.analyzer.summery,
+      });
+
+      console.log("Note added successfully");
     } catch (err) {
       console.error(err);
     }

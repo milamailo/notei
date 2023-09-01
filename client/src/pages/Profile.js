@@ -26,7 +26,7 @@ const Profile = () => {
   const user = data?.authUser || data?.userByEmailOrUserName || {};
 
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to="/authUser" />;
+    return <Navigate to="/me" />;
   }
 
   if (loading) {
@@ -47,6 +47,9 @@ const Profile = () => {
       // Call the mutation function to add a note
       await addNote({
         variables: noteData,
+        refetchQueries: [
+          { query: QUERY_USER, variables: { username: userParam } },
+        ],
       });
 
       // After adding a note, the Apollo Client cache will be automatically updated
