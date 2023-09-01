@@ -7,8 +7,8 @@ import ComingSoon from "./pages/ComingSoon";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <ComingSoon />
+    <App />
+    {/* <ComingSoon /> */}
   </React.StrictMode>,
   document.getElementById("root")
 );
