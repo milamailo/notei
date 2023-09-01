@@ -104,7 +104,6 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
         });
   
         console.log("Note added successfully");
-        client.reFetchObservableQueries();
       } else {
         console.error("No data or analyzer information available.");
       }
