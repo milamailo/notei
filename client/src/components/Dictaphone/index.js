@@ -9,6 +9,7 @@ import { QUERY_ANALYZE } from "../../utils/queries";
 import { MUTATION_ADD_NOTE } from "../../utils/mutations";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import Auth from "../../utils/auth";
+import { QUERY_ME } from "../../utils/queries";
 
 const appId = "fdc5337d-095d-42be-b1b0-11b8833365f1";
 const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(appId);
@@ -25,7 +26,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
     SpeechRecognition.startListening({ continuous: true });
 
   const [dictphoneContainar, setDictphoneContainar] = useState(true);
-  const [note, setNote] = useState({});
+  // const [note, setNote] = useState({});
 
   const transcriptRef = useRef(null);
   const [addNote, { error }] = useMutation(MUTATION_ADD_NOTE, {
@@ -33,6 +34,23 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
       headers: {
         authorization: Auth.getToken() ? `Bearer ${Auth.getToken()}` : "",
       },
+    },
+    update(cache, { data: { addNote } }) {
+      try {
+        const { authUser } = cache.readQuery({ query: QUERY_ME });
+
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: {
+            authUser: {
+              ...authUser,
+              notes: [addNote, ...authUser.notes],
+            },
+          },
+        });
+      } catch (e) {
+        console.error(e);
+      }
     },
   });
 
@@ -78,13 +96,17 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
   const saveTranscriptHandler = async (event) => {
     event.preventDefault();
     try {
-      await handleAddNote({
-        title: data.analyzer.title,
-        text: data.analyzer.text,
-        summery: data.analyzer.summery,
-      });
-
-      console.log("Note added successfully");
+      if (data && data.analyzer) {
+        await handleAddNote({
+          title: data.analyzer.title,
+          text: data.analyzer.text,
+          summery: data.analyzer.summery,
+        });
+  
+        console.log("Note added successfully");
+      } else {
+        console.error("No data or analyzer information available.");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -94,7 +116,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
     <>
       <Backdrop onClick={btnBack} />
       <div className="root-dictphone">
-        <div className="d-flex flex-row bg-test">
+        <div className="d-flex flex-row bg-light">
           <div>
             <h5 className="card-header bg-primary text-light p-2 m-1">
               Microphone: {listening ? "on" : "off"}
@@ -145,7 +167,7 @@ const Dictaphone = ({ user, btnBack, setShowAddNote, handleAddNote }) => {
               </div>
               <div className="p-2">
                 <button
-                  className="bg-primary text-light p-2 btn-noteit"
+                  className="bg-primary text-dark bg-light p-2 btn-noteit"
                   onTouchStart={startListening}
                   onMouseDown={startListening}
                   onTouchEnd={SpeechRecognition.stopListening}
