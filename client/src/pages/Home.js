@@ -23,7 +23,7 @@ const Home = () => {
           />
           <div className="coming-soon-content">
             <h1>NoteI</h1>
-            <h6>Coming Soon!</h6>
+            <h1>NoteI</h1>
           </div>
         </div>
       </div>
