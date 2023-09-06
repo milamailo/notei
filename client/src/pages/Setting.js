@@ -8,7 +8,7 @@ import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import { Navigate, useParams, Link } from "react-router-dom";
 import News from "../components/News";
 
-const Home = () => {
+const Setting = () => {
   const { username: userParam } = useParams();
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
@@ -169,4 +169,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Setting;
