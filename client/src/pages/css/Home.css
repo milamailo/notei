@@ -19,12 +19,39 @@
   justify-content: center;
 }
 .main-content {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-evenly;
   padding: 0;
 }
+/* reflection */
+.coming-soon-content > :last-child {
+  transform: rotatex(180deg) translatey(15px);
+  mask-image: linear-gradient(transparent 50%, white 90%);
+  -webkit-mask-image: linear-gradient(transparent 50%, white 90%);
+}
+/* original design */
+.coming-soon-content > * {
+  font: bolder 5rem/5rem "EB Garamond";
+  background-color: red;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.coming-soon-content {
+  width: max-content;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 1280px) {
   .container-child {
     width: 260px;

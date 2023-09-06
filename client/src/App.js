@@ -49,23 +49,11 @@ const App = () => {
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />
-            </Routes>
-            <Routes>
               <Route path="/login" element={<Login />} />
-            </Routes>
-            <Routes>
               <Route path="/signup" element={<Signup />} />
-            </Routes>
-            <Routes>
               <Route path="/me" element={<Profile />} />
-            </Routes>
-            <Routes>
               <Route path="/edit-profile" element={<EditProfile />} />
-            </Routes>
-            <Routes>
               <Route path="/edit-password" element={<EditPassword />} />
-            </Routes>
-            <Routes>
               <Route path="/profiles/:username" element={<Profile />} />
             </Routes>
           </div>
