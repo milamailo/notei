@@ -15,6 +15,7 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import EditPassword from "./pages/EditPassword";
+import ComingSoon from "./pages/ComingSoon";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
